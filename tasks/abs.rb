@@ -36,6 +36,7 @@ def provision(platform, inventory_location, vars)
                 'job' => { 'id' => job_id,
                            'tags' => { 'user' => Etc.getlogin, 'jenkins_build_url' => jenkins_build_url } } }
             end
+
   http = Net::HTTP.new(uri.host, uri.port)
   http.use_ssl = true
   request = Net::HTTP::Post.new(uri.request_uri, headers)
@@ -68,7 +69,7 @@ def provision(platform, inventory_location, vars)
 
   raise 'Timeout: unable to get a 200 response in 10 minutes' if reply.code != '200'
 
-  inventory_full_path = File.join(inventory_location, 'inventory.yaml')
+  inventory_full_path = File.join(inventory_location, '/spec/fixtures/litmus_inventory.yaml')
   inventory_hash = get_inventory_hash(inventory_full_path)
   data = JSON.parse(reply.body)
   data.each do |host|
@@ -96,8 +97,8 @@ end
 
 def tear_down(node_name, inventory_location)
   include PuppetLitmus::InventoryManipulation
-
-  inventory_full_path = File.join(inventory_location, 'inventory.yaml')
+  require 'pry'
+  inventory_full_path = File.join(inventory_location, '/spec/fixtures/litmus_inventory.yaml')
   if File.file?(inventory_full_path)
     inventory_hash = inventory_hash_from_inventory_file(inventory_full_path)
     facts = facts_from_node(inventory_hash, node_name)
