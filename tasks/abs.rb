@@ -97,7 +97,6 @@ end
 
 def tear_down(node_name, inventory_location)
   include PuppetLitmus::InventoryManipulation
-  require 'pry'
   inventory_full_path = File.join(inventory_location, '/spec/fixtures/litmus_inventory.yaml')
   if File.file?(inventory_full_path)
     inventory_hash = inventory_hash_from_inventory_file(inventory_full_path)
