@@ -104,8 +104,8 @@ def provision(platform, inventory_location, vars)
     end
   end
 
-  if File.file?(inventory_full_path)
-    inventory_hash = inventory_hash_from_inventory_file(inventory_full_path)
+  if File.file?('/home/runner/work/puppetlabs-testing/puppetlabs-testing/spec/fixtures/litmus_inventory.yaml')
+    inventory_hash = inventory_hash_from_inventory_file('/home/runner/work/puppetlabs-testing/puppetlabs-testing/spec/fixtures/litmus_inventory.yaml')
     inventory_hash['groups'].each do |g|
       response_hash['groups'].each do |bg|
         if g['name'] == bg['name']
